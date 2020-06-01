@@ -402,7 +402,7 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
 
     Color cancelColor;
 
-    switch (CupertinoTheme.of(context).brightness) {
+    switch (CupertinoTheme.of(context).brightness ?? Brightness.light) {
       case Brightness.light:
         cancelColor = CupertinoColors.black.withOpacity(0.54);
         break;
