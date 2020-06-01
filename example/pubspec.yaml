@@ -1,0 +1,12 @@
+name: cupertino_stepper_example
+description: Cupertino Stepper for Flutter example app.
+publish_to: 'none'
+
+environment:
+  sdk: '>=2.7.0 <3.0.0'
+
+dependencies:
+  cupertino_stepper:
+    path: ../
+  flutter:
+    sdk: flutter
