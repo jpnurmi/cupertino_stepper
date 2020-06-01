@@ -5,8 +5,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart'
-    show Material, MaterialApp, FlatButton, Colors, ButtonTextTheme, Icons;
+import 'package:flutter/cupertino.dart';
 import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -15,8 +14,8 @@ void main() {
     int index = 0;
 
     await tester.pumpWidget(
-      MaterialApp(
-        home: Material(
+      CupertinoApp(
+        home: Container(
           child: CupertinoStepper(
             onStepTapped: (int i) {
               index = i;
@@ -47,9 +46,9 @@ void main() {
 
   testWidgets('Stepper expansion test', (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
+      CupertinoApp(
         home: Center(
-          child: Material(
+          child: Container(
             child: CupertinoStepper(
               steps: const <Step>[
                 Step(
@@ -74,12 +73,12 @@ void main() {
     );
 
     RenderBox box = tester.renderObject(find.byType(CupertinoStepper));
-    expect(box.size.height, 332.0);
+    expect(box.size.height, 369.0);
 
     await tester.pumpWidget(
-      MaterialApp(
+      CupertinoApp(
         home: Center(
-          child: Material(
+          child: Container(
             child: CupertinoStepper(
               currentStep: 1,
               steps: const <Step>[
@@ -106,17 +105,17 @@ void main() {
 
     await tester.pump(const Duration(milliseconds: 100));
     box = tester.renderObject(find.byType(CupertinoStepper));
-    expect(box.size.height, greaterThan(332.0));
+    expect(box.size.height, greaterThan(369.0));
     await tester.pump(const Duration(milliseconds: 100));
     box = tester.renderObject(find.byType(CupertinoStepper));
-    expect(box.size.height, 432.0);
+    expect(box.size.height, greaterThan(432.0));
   });
 
   testWidgets('Stepper horizontal size test', (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
+      CupertinoApp(
         home: Center(
-          child: Material(
+          child: Container(
             child: CupertinoStepper(
               type: StepperType.horizontal,
               steps: const <Step>[
@@ -140,8 +139,8 @@ void main() {
 
   testWidgets('Stepper visibility test', (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
-        home: Material(
+      CupertinoApp(
+        home: Container(
           child: CupertinoStepper(
             type: StepperType.horizontal,
             steps: const <Step>[
@@ -163,8 +162,8 @@ void main() {
     expect(find.text('B'), findsNothing);
 
     await tester.pumpWidget(
-      MaterialApp(
-        home: Material(
+      CupertinoApp(
+        home: Container(
           child: CupertinoStepper(
             currentStep: 1,
             type: StepperType.horizontal,
@@ -192,8 +191,8 @@ void main() {
     bool cancelPressed = false;
 
     await tester.pumpWidget(
-      MaterialApp(
-        home: Material(
+      CupertinoApp(
+        home: Container(
           child: CupertinoStepper(
             type: StepperType.horizontal,
             onStepContinue: () {
@@ -223,8 +222,8 @@ void main() {
       ),
     );
 
-    await tester.tap(find.text('CONTINUE'));
-    await tester.tap(find.text('CANCEL'));
+    await tester.tap(find.text('Continue'));
+    await tester.tap(find.text('Cancel'));
 
     expect(continuePressed, isTrue);
     expect(cancelPressed, isTrue);
@@ -234,8 +233,8 @@ void main() {
     int index = 0;
 
     await tester.pumpWidget(
-      MaterialApp(
-        home: Material(
+      CupertinoApp(
+        home: Container(
           child: CupertinoStepper(
             onStepTapped: (int i) {
               index = i;
@@ -268,22 +267,22 @@ void main() {
 
   testWidgets('Stepper scroll test', (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
-        home: Material(
+      CupertinoApp(
+        home: Container(
           child: CupertinoStepper(
             steps: const <Step>[
               Step(
                 title: Text('Step 1'),
                 content: SizedBox(
                   width: 100.0,
-                  height: 300.0,
+                  height: 280.0,
                 ),
               ),
               Step(
                 title: Text('Step 2'),
                 content: SizedBox(
                   width: 100.0,
-                  height: 300.0,
+                  height: 280.0,
                 ),
               ),
               Step(
@@ -305,8 +304,8 @@ void main() {
 
     await tester.tap(find.text('Step 3'));
     await tester.pumpWidget(
-      MaterialApp(
-        home: Material(
+      CupertinoApp(
+        home: Container(
           child: CupertinoStepper(
             currentStep: 2,
             steps: const <Step>[
@@ -314,14 +313,14 @@ void main() {
                 title: Text('Step 1'),
                 content: SizedBox(
                   width: 100.0,
-                  height: 300.0,
+                  height: 280.0,
                 ),
               ),
               Step(
                 title: Text('Step 2'),
                 content: SizedBox(
                   width: 100.0,
-                  height: 300.0,
+                  height: 280.0,
                 ),
               ),
               Step(
@@ -338,14 +337,15 @@ void main() {
     );
 
     await tester.pump(const Duration(milliseconds: 100));
+    print(scrollableState.position);
     expect(scrollableState.position.pixels, greaterThan(0.0));
   });
 
   testWidgets('Stepper index test', (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
+      CupertinoApp(
         home: Center(
-          child: Material(
+          child: Container(
             child: CupertinoStepper(
               steps: const <Step>[
                 Step(
@@ -393,19 +393,14 @@ void main() {
           constraints: const BoxConstraints.tightFor(height: 48.0),
           child: Row(
             children: <Widget>[
-              FlatButton(
+              CupertinoButton(
                 onPressed: onStepContinue,
-                color: Colors.blue,
-                textColor: Colors.white,
-                textTheme: ButtonTextTheme.normal,
                 child: const Text('Let us continue!'),
               ),
               Container(
                 margin: const EdgeInsetsDirectional.only(start: 8.0),
-                child: FlatButton(
+                child: CupertinoButton(
                   onPressed: onStepCancel,
-                  textColor: Colors.red,
-                  textTheme: ButtonTextTheme.normal,
                   child: const Text('Cancel This!'),
                 ),
               ),
@@ -416,9 +411,9 @@ void main() {
     };
 
     await tester.pumpWidget(
-      MaterialApp(
+      CupertinoApp(
         home: Center(
-          child: Material(
+          child: Container(
             child: CupertinoStepper(
               controlsBuilder: builder,
               onStepCancel: setCanceled,
@@ -461,9 +456,9 @@ void main() {
 
   testWidgets('Stepper error test', (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
+      CupertinoApp(
         home: Center(
-          child: Material(
+          child: Container(
             child: CupertinoStepper(
               steps: const <Step>[
                 Step(
@@ -492,8 +487,8 @@ void main() {
     };
     try {
       await tester.pumpWidget(
-        MaterialApp(
-          home: Material(
+        CupertinoApp(
+          home: Container(
             child: CupertinoStepper(
               type: StepperType.horizontal,
               steps: <Step>[
@@ -543,7 +538,7 @@ void main() {
         errorMessage,
         startsWith(
             '══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞════════════════════════\n'
-            'The following assertion was thrown building Stepper('));
+            'The following assertion was thrown building\nCupertinoStepper('));
     // The description string of the stepper looks slightly different depending
     // on the platform and is omitted here.
     expect(
@@ -558,8 +553,8 @@ void main() {
   ///https://github.com/flutter/flutter/issues/16920
   testWidgets('Stepper icons size test', (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
-        home: Material(
+      CupertinoApp(
+        home: Container(
           child: CupertinoStepper(
             steps: const <Step>[
               Step(
@@ -578,17 +573,18 @@ void main() {
       ),
     );
 
-    RenderBox renderObject = tester.renderObject(find.byIcon(Icons.edit));
-    expect(renderObject.size, equals(const Size.square(18.0)));
+    RenderBox renderObject =
+        tester.renderObject(find.byIcon(CupertinoIcons.pencil));
+    expect(renderObject.size, equals(const Size.square(20.0)));
 
-    renderObject = tester.renderObject(find.byIcon(Icons.check));
-    expect(renderObject.size, equals(const Size.square(18.0)));
+    renderObject = tester.renderObject(find.byIcon(CupertinoIcons.check_mark));
+    expect(renderObject.size, equals(const Size.square(40.0)));
   });
 
   testWidgets('Stepper physics scroll error test', (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
-        home: Material(
+      CupertinoApp(
+        home: Container(
           child: ListView(
             children: <Widget>[
               CupertinoStepper(
@@ -622,8 +618,8 @@ void main() {
   testWidgets("Vertical Stepper can't be focused when disabled.",
       (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
-        home: Material(
+      CupertinoApp(
+        home: Container(
           child: CupertinoStepper(
             currentStep: 0,
             type: StepperType.vertical,
@@ -650,8 +646,8 @@ void main() {
   testWidgets("Horizontal Stepper can't be focused when disabled.",
       (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
-        home: Material(
+      CupertinoApp(
+        home: Container(
           child: CupertinoStepper(
             currentStep: 0,
             type: StepperType.horizontal,
