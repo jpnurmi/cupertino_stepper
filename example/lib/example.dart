@@ -49,10 +49,10 @@ class _StepperPageState extends State<StepperPage> {
     );
   }
 
-  Stepper _buildStepper(StepperType type) {
+  CupertinoStepper _buildStepper(StepperType type) {
     final canCancel = currentStep > 0;
     final canContinue = currentStep < 3;
-    return Stepper(
+    return CupertinoStepper(
       type: type,
       currentStep: currentStep,
       onStepTapped: (step) => setState(() => currentStep = step),

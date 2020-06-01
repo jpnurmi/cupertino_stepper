@@ -24,7 +24,7 @@ const EdgeInsets _kBackgroundButtonPadding = EdgeInsets.symmetric(
   horizontal: 64.0,
 );
 
-/// A material stepper widget that displays progress through a sequence of
+/// A cupertino stepper widget that displays progress through a sequence of
 /// steps. Steppers are particularly useful in the case of forms where one step
 /// requires the completion of another one, or where multiple steps need to be
 /// completed in order to submit the whole form.
@@ -37,7 +37,7 @@ const EdgeInsets _kBackgroundButtonPadding = EdgeInsets.symmetric(
 ///
 ///  * [Step]
 ///  * <https://material.io/archive/guidelines/components/steppers.html>
-class Stepper extends StatefulWidget {
+class CupertinoStepper extends StatefulWidget {
   /// Creates a stepper from a list of steps.
   ///
   /// This widget is not meant to be rebuilt with a different list of steps
@@ -45,7 +45,7 @@ class Stepper extends StatefulWidget {
   /// new one.
   ///
   /// The [steps], [type], and [currentStep] arguments must not be null.
-  const Stepper({
+  const CupertinoStepper({
     Key key,
     @required this.steps,
     this.physics,
@@ -149,10 +149,11 @@ class Stepper extends StatefulWidget {
   final ControlsWidgetBuilder controlsBuilder;
 
   @override
-  _StepperState createState() => _StepperState();
+  _CupertinoStepperState createState() => _CupertinoStepperState();
 }
 
-class _StepperState extends State<Stepper> with TickerProviderStateMixin {
+class _CupertinoStepperState extends State<CupertinoStepper>
+    with TickerProviderStateMixin {
   List<GlobalKey> _keys;
   final Map<int, StepState> _oldStates = <int, StepState>{};
 
@@ -169,7 +170,7 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
   }
 
   @override
-  void didUpdateWidget(Stepper oldWidget) {
+  void didUpdateWidget(CupertinoStepper oldWidget) {
     super.didUpdateWidget(oldWidget);
     assert(widget.steps.length == oldWidget.steps.length);
 
@@ -599,7 +600,7 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
     // ### TODO: assert(debugCheckHasMaterial(context));
     // ### TODO: assert(debugCheckHasMaterialLocalizations(context));
     assert(() {
-      if (context.findAncestorWidgetOfExactType<Stepper>() != null)
+      if (context.findAncestorWidgetOfExactType<CupertinoStepper>() != null)
         throw FlutterError('Steppers must not be nested.\n'
             'The material specification advises that one should avoid embedding '
             'steppers within steppers. '

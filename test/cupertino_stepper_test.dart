@@ -17,7 +17,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: Stepper(
+          child: CupertinoStepper(
             onStepTapped: (int i) {
               index = i;
             },
@@ -50,7 +50,7 @@ void main() {
       MaterialApp(
         home: Center(
           child: Material(
-            child: Stepper(
+            child: CupertinoStepper(
               steps: const <Step>[
                 Step(
                   title: Text('Step 1'),
@@ -73,14 +73,14 @@ void main() {
       ),
     );
 
-    RenderBox box = tester.renderObject(find.byType(Stepper));
+    RenderBox box = tester.renderObject(find.byType(CupertinoStepper));
     expect(box.size.height, 332.0);
 
     await tester.pumpWidget(
       MaterialApp(
         home: Center(
           child: Material(
-            child: Stepper(
+            child: CupertinoStepper(
               currentStep: 1,
               steps: const <Step>[
                 Step(
@@ -105,10 +105,10 @@ void main() {
     );
 
     await tester.pump(const Duration(milliseconds: 100));
-    box = tester.renderObject(find.byType(Stepper));
+    box = tester.renderObject(find.byType(CupertinoStepper));
     expect(box.size.height, greaterThan(332.0));
     await tester.pump(const Duration(milliseconds: 100));
-    box = tester.renderObject(find.byType(Stepper));
+    box = tester.renderObject(find.byType(CupertinoStepper));
     expect(box.size.height, 432.0);
   });
 
@@ -117,7 +117,7 @@ void main() {
       MaterialApp(
         home: Center(
           child: Material(
-            child: Stepper(
+            child: CupertinoStepper(
               type: StepperType.horizontal,
               steps: const <Step>[
                 Step(
@@ -134,7 +134,7 @@ void main() {
       ),
     );
 
-    final RenderBox box = tester.renderObject(find.byType(Stepper));
+    final RenderBox box = tester.renderObject(find.byType(CupertinoStepper));
     expect(box.size.height, 600.0);
   });
 
@@ -142,7 +142,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: Stepper(
+          child: CupertinoStepper(
             type: StepperType.horizontal,
             steps: const <Step>[
               Step(
@@ -165,7 +165,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: Stepper(
+          child: CupertinoStepper(
             currentStep: 1,
             type: StepperType.horizontal,
             steps: const <Step>[
@@ -194,7 +194,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: Stepper(
+          child: CupertinoStepper(
             type: StepperType.horizontal,
             onStepContinue: () {
               continuePressed = true;
@@ -236,7 +236,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: Stepper(
+          child: CupertinoStepper(
             onStepTapped: (int i) {
               index = i;
             },
@@ -270,7 +270,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: Stepper(
+          child: CupertinoStepper(
             steps: const <Step>[
               Step(
                 title: Text('Step 1'),
@@ -307,7 +307,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: Stepper(
+          child: CupertinoStepper(
             currentStep: 2,
             steps: const <Step>[
               Step(
@@ -346,7 +346,7 @@ void main() {
       MaterialApp(
         home: Center(
           child: Material(
-            child: Stepper(
+            child: CupertinoStepper(
               steps: const <Step>[
                 Step(
                   title: Text('A'),
@@ -419,7 +419,7 @@ void main() {
       MaterialApp(
         home: Center(
           child: Material(
-            child: Stepper(
+            child: CupertinoStepper(
               controlsBuilder: builder,
               onStepCancel: setCanceled,
               onStepContinue: setContinue,
@@ -464,7 +464,7 @@ void main() {
       MaterialApp(
         home: Center(
           child: Material(
-            child: Stepper(
+            child: CupertinoStepper(
               steps: const <Step>[
                 Step(
                   title: Text('A'),
@@ -494,12 +494,12 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Material(
-            child: Stepper(
+            child: CupertinoStepper(
               type: StepperType.horizontal,
               steps: <Step>[
                 Step(
                   title: const Text('Step 2'),
-                  content: Stepper(
+                  content: CupertinoStepper(
                     type: StepperType.vertical,
                     steps: const <Step>[
                       Step(
@@ -560,7 +560,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: Stepper(
+          child: CupertinoStepper(
             steps: const <Step>[
               Step(
                 title: Text('A'),
@@ -591,7 +591,7 @@ void main() {
         home: Material(
           child: ListView(
             children: <Widget>[
-              Stepper(
+              CupertinoStepper(
                 steps: const <Step>[
                   Step(title: Text('Step 1'), content: Text('Text 1')),
                   Step(title: Text('Step 2'), content: Text('Text 2')),
@@ -612,7 +612,8 @@ void main() {
       ),
     );
 
-    await tester.fling(find.byType(Stepper), const Offset(0.0, -100.0), 1000.0);
+    await tester.fling(
+        find.byType(CupertinoStepper), const Offset(0.0, -100.0), 1000.0);
     await tester.pumpAndSettle();
 
     expect(find.text('Text After Stepper'), findsNothing);
@@ -623,7 +624,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: Stepper(
+          child: CupertinoStepper(
             currentStep: 0,
             type: StepperType.vertical,
             steps: const <Step>[
@@ -651,7 +652,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
-          child: Stepper(
+          child: CupertinoStepper(
             currentStep: 0,
             type: StepperType.horizontal,
             steps: const <Step>[
