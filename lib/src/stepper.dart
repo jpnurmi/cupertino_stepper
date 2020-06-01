@@ -597,8 +597,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
 
   @override
   Widget build(BuildContext context) {
-    // ### TODO: assert(debugCheckHasMaterial(context));
-    // ### TODO: assert(debugCheckHasMaterialLocalizations(context));
+    assert(debugCheckHasDirectionality(context));
     assert(() {
       if (context.findAncestorWidgetOfExactType<CupertinoStepper>() != null)
         throw FlutterError('Steppers must not be nested.\n'
