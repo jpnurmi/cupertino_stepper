@@ -592,9 +592,9 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
           Column(
             key: _keys[i],
             children: <Widget>[
-              // ### TODO: remove material
-              todo.InkWell(
-                onTap: widget.steps[i].state != StepState.disabled
+              CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: widget.steps[i].state != StepState.disabled
                     ? () {
                         // In the vertical case we need to scroll to the newly tapped
                         // step.
@@ -607,7 +607,6 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
                         if (widget.onStepTapped != null) widget.onStepTapped(i);
                       }
                     : null,
-                canRequestFocus: widget.steps[i].state != StepState.disabled,
                 child: _buildVerticalHeader(i),
               ),
               _buildVerticalBody(i),
@@ -620,14 +619,13 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
   Widget _buildHorizontal() {
     final List<Widget> children = <Widget>[
       for (int i = 0; i < widget.steps.length; i += 1) ...<Widget>[
-        // ### TODO: remove material
-        todo.InkResponse(
-          onTap: widget.steps[i].state != StepState.disabled
+        CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: widget.steps[i].state != StepState.disabled
               ? () {
                   if (widget.onStepTapped != null) widget.onStepTapped(i);
                 }
               : null,
-          canRequestFocus: widget.steps[i].state != StepState.disabled,
           child: Row(
             children: <Widget>[
               Container(
