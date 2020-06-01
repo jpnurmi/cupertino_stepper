@@ -187,10 +187,6 @@ class _CupertinoStepperState extends State<CupertinoStepper>
     return widget.currentStep == index;
   }
 
-  bool _isDark() {
-    return CupertinoTheme.of(context).brightness == Brightness.dark;
-  }
-
   Widget _buildLine(bool visible) {
     return Container(
       width: visible ? 1.0 : 0.0,
@@ -330,9 +326,6 @@ class _CupertinoStepperState extends State<CupertinoStepper>
       return widget.controlsBuilder(context,
           onStepContinue: widget.onStepContinue,
           onStepCancel: widget.onStepCancel);
-
-    final CupertinoThemeData themeData = CupertinoTheme.of(context);
-    final TextStyle textStyle = themeData.textTheme.textStyle;
 
     return Container(
       margin: const EdgeInsets.only(top: 16.0),
