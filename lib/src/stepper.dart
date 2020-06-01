@@ -206,8 +206,8 @@ class _CupertinoStepperState extends State<CupertinoStepper>
     final bool isActive = widget.steps[index].isActive;
     assert(state != null);
     switch (state) {
-      case StepState.indexed:
       case StepState.disabled:
+      case StepState.indexed:
         return Text(
           '${index + 1}',
           style: TextStyle(
@@ -215,7 +215,10 @@ class _CupertinoStepperState extends State<CupertinoStepper>
               color: isActive
                   ? CupertinoDynamicColor.resolve(
                       CupertinoColors.white, context)
-                  : themeData.primaryColor),
+                  : state == StepState.disabled
+                      ? CupertinoDynamicColor.resolve(
+                          CupertinoColors.placeholderText, context)
+                      : themeData.primaryColor),
         );
       case StepState.editing:
         return Icon(
@@ -248,7 +251,10 @@ class _CupertinoStepperState extends State<CupertinoStepper>
 
   Color _borderColor(int index) {
     final CupertinoThemeData themeData = CupertinoTheme.of(context);
-    return themeData.primaryColor;
+    return widget.steps[index].state == StepState.disabled
+        ? CupertinoDynamicColor.resolve(
+            CupertinoColors.placeholderText, context)
+        : themeData.primaryColor;
   }
 
   Widget _buildCircle(int index, bool oldState) {
