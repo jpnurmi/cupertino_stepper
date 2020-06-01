@@ -277,7 +277,7 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
     return Container(
       width: visible ? 1.0 : 0.0,
       height: 16.0,
-      color: CupertinoColors.systemGrey, // ### TODO: shade400
+      color: CupertinoColors.separator,
     );
   }
 
@@ -550,7 +550,7 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
               child: SizedBox(
                 width: _isLast(index) ? 0.0 : 1.0,
                 child: Container(
-                  color: CupertinoColors.systemGrey, // ### TODO: shade400
+                  color: CupertinoColors.separator,
                 ),
               ),
             ),
@@ -646,7 +646,7 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 8.0),
               height: 1.0,
-              color: CupertinoColors.systemGrey, // ### TODO: shade400
+              color: CupertinoColors.separator,
             ),
           ),
       ],
