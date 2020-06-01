@@ -12,14 +12,15 @@ export 'package:flutter/material.dart' show Step, StepState, StepperType;
 //   * alternative labeling
 //   * stepper feedback in the case of high-latency interactions
 
-const double _kStepFontSize = 20.0;
 const double _kStepSize = 44.0;
 const double _kStepMargin = 24.0;
+const double _kStepPadding = 8.0;
+const double _kStepSpacing = 12.0;
+const double _kStepFontSize = 20.0;
 const double _kTriangleHeight =
     _kStepSize * 0.866025; // Triangle height. sqrt(3.0) / 2.0
 const Duration _kThemeAnimationDuration = const Duration(milliseconds: 200);
-
-const EdgeInsets _kBackgroundButtonPadding = EdgeInsets.symmetric(
+const EdgeInsets _kButtonPadding = EdgeInsets.symmetric(
   vertical: 14.0,
   horizontal: 64.0,
 );
@@ -256,7 +257,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
 
   Widget _buildCircle(int index, bool oldState) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: _kStepPadding),
       width: _kStepSize,
       height: _kStepSize,
       child: AnimatedContainer(
@@ -277,7 +278,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
 
   Widget _buildTriangle(int index, bool oldState) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: _kStepPadding),
       width: _kStepSize,
       height: _kStepSize,
       child: Center(
@@ -338,7 +339,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           CupertinoButton(
-            padding: _kBackgroundButtonPadding,
+            padding: _kButtonPadding,
             onPressed: widget.onStepCancel,
             child: Text('Cancel'),
           ),
@@ -349,7 +350,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
               ),
             ),
             child: CupertinoButton(
-              padding: _kBackgroundButtonPadding,
+              padding: _kButtonPadding,
               onPressed: widget.onStepContinue,
               child: Text('Continue'),
             ),
@@ -435,7 +436,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
         children: <Widget>[
           _buildIcon(index),
           Container(
-            margin: const EdgeInsetsDirectional.only(start: 12.0),
+            margin: const EdgeInsetsDirectional.only(start: _kStepSpacing),
             child: _buildHeaderText(index),
           ),
         ],
@@ -552,7 +553,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
                 ),
               ),
               Container(
-                margin: const EdgeInsetsDirectional.only(start: 12.0),
+                margin: const EdgeInsetsDirectional.only(start: _kStepSpacing),
                 child: _buildHeaderText(i),
               ),
             ],
@@ -561,7 +562,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
         if (!_isLast(i))
           Expanded(
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8.0),
+              margin: const EdgeInsets.symmetric(horizontal: _kStepPadding),
               height: 1.0,
               color: CupertinoColors.separator,
             ),
@@ -572,14 +573,14 @@ class _CupertinoStepperState extends State<CupertinoStepper>
     return Column(
       children: <Widget>[
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 24.0),
+          margin: const EdgeInsets.symmetric(horizontal: _kStepMargin),
           child: Row(
             children: children,
           ),
         ),
         Expanded(
           child: ListView(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(_kStepMargin),
             children: <Widget>[
               AnimatedSize(
                 curve: Curves.fastOutSlowIn,
