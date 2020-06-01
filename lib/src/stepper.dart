@@ -44,20 +44,17 @@ enum StepperType {
   horizontal,
 }
 
-const TextStyle _kStepStyle = TextStyle(
-  fontSize: 12.0,
-  color: CupertinoColors.white,
-);
-const Color _kErrorLight = CupertinoColors.systemRed;
-final Color _kErrorDark = CupertinoColors.systemRed; // ### TODO: shade400
-const Color _kCircleActiveLight = CupertinoColors.white;
-final Color _kCircleActiveDark = CupertinoColors.black.withOpacity(0.87);
-final Color _kDisabledLight = CupertinoColors.black.withOpacity(0.38);
-final Color _kDisabledDark = CupertinoColors.white.withOpacity(0.38);
-const double _kStepSize = 24.0;
+const double _kStepFontSize = 20.0;
+const double _kStepSize = 44.0;
+const double _kStepMargin = 24.0;
 const double _kTriangleHeight =
     _kStepSize * 0.866025; // Triangle height. sqrt(3.0) / 2.0
 const Duration _kThemeAnimationDuration = const Duration(milliseconds: 200);
+
+const EdgeInsets _kBackgroundButtonPadding = EdgeInsets.symmetric(
+  vertical: 14.0,
+  horizontal: 64.0,
+);
 
 /// A material step used in [Stepper]. The step can have a title and subtitle,
 /// an icon within its circle, some content and a state that governs its
@@ -282,49 +279,55 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
   }
 
   Widget _buildCircleChild(int index, bool oldState) {
+    final CupertinoThemeData themeData = CupertinoTheme.of(context);
     final StepState state =
         oldState ? _oldStates[index] : widget.steps[index].state;
-    final bool isDarkActive = _isDark() && widget.steps[index].isActive;
+    final bool isActive = widget.steps[index].isActive;
     assert(state != null);
     switch (state) {
       case StepState.indexed:
       case StepState.disabled:
         return Text(
           '${index + 1}',
-          style: isDarkActive
-              ? _kStepStyle.copyWith(
-                  color: CupertinoColors.black.withOpacity(0.87))
-              : _kStepStyle,
+          style: TextStyle(
+              fontSize: _kStepFontSize,
+              color: isActive
+                  ? CupertinoDynamicColor.resolve(
+                      CupertinoColors.white, context)
+                  : themeData.primaryColor),
         );
       case StepState.editing:
         return Icon(
-          CupertinoIcons.create,
-          color: isDarkActive ? _kCircleActiveDark : _kCircleActiveLight,
-          size: 18.0,
+          CupertinoIcons.pencil,
+          color: isActive
+              ? CupertinoDynamicColor.resolve(CupertinoColors.white, context)
+              : themeData.primaryColor,
+          size: _kStepFontSize,
         );
       case StepState.complete:
         return Icon(
           CupertinoIcons.check_mark,
-          color: isDarkActive ? _kCircleActiveDark : _kCircleActiveLight,
-          size: 18.0,
+          color: isActive
+              ? CupertinoDynamicColor.resolve(CupertinoColors.white, context)
+              : themeData.primaryColor,
+          size: _kStepFontSize * 2, // ### TODO: why is check_mark so small?
         );
       case StepState.error:
-        return const Text('!', style: _kStepStyle);
+        return const Text('!',
+            style: TextStyle(
+                fontSize: _kStepFontSize, color: CupertinoColors.white));
     }
     return null;
   }
 
   Color _circleColor(int index) {
     final CupertinoThemeData themeData = CupertinoTheme.of(context);
-    if (!_isDark()) {
-      return widget.steps[index].isActive
-          ? themeData.primaryColor
-          : CupertinoColors.black.withOpacity(0.38);
-    } else {
-      return widget.steps[index].isActive
-          ? themeData.primaryColor
-          : themeData.scaffoldBackgroundColor;
-    }
+    return widget.steps[index].isActive ? themeData.primaryColor : null;
+  }
+
+  Color _borderColor(int index) {
+    final CupertinoThemeData themeData = CupertinoTheme.of(context);
+    return themeData.primaryColor;
   }
 
   Widget _buildCircle(int index, bool oldState) {
@@ -335,9 +338,10 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
       child: AnimatedContainer(
         curve: Curves.fastOutSlowIn,
         duration: _kThemeAnimationDuration,
-        decoration: BoxDecoration(
+        decoration: ShapeDecoration(
           color: _circleColor(index),
-          shape: BoxShape.circle,
+          //shape: BoxShape.circle,
+          shape: CircleBorder(side: BorderSide(color: _borderColor(index))),
         ),
         child: Center(
           child: _buildCircleChild(
@@ -359,7 +363,8 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
               _kTriangleHeight, // Height of 24dp-long-sided equilateral triangle.
           child: CustomPaint(
             painter: _TrianglePainter(
-              color: _isDark() ? _kErrorDark : _kErrorLight,
+              color: CupertinoDynamicColor.resolve(
+                  CupertinoColors.systemRed, context),
             ),
             child: Align(
               alignment: const Alignment(
@@ -400,51 +405,32 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
           onStepContinue: widget.onStepContinue,
           onStepCancel: widget.onStepCancel);
 
-    Color cancelColor;
-
-    switch (CupertinoTheme.of(context).brightness ?? Brightness.light) {
-      case Brightness.light:
-        cancelColor = CupertinoColors.black.withOpacity(0.54);
-        break;
-      case Brightness.dark:
-        cancelColor = CupertinoColors.white.withOpacity(0.70);
-        break;
-    }
-
-    assert(cancelColor != null);
-
     final CupertinoThemeData themeData = CupertinoTheme.of(context);
-    final CupertinoLocalizations localizations =
-        CupertinoLocalizations.of(context);
+    final TextStyle textStyle = themeData.textTheme.textStyle;
 
     return Container(
       margin: const EdgeInsets.only(top: 16.0),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints.tightFor(height: 48.0),
-        child: Row(
-          children: <Widget>[
-            CupertinoButton(
-              onPressed: widget.onStepContinue,
-              color: _isDark()
-                  ? themeData.scaffoldBackgroundColor
-                  : themeData.primaryColor,
-              // ### TODO: textColor: Colors.white,
-              // ### TODO: theme: ButtonTextTheme.normal,
-              child: Text(
-                  'Continue'), // ### TODO: localizations.continueButtonLabel
-            ),
-            Container(
-              margin: const EdgeInsetsDirectional.only(start: 8.0),
-              child: CupertinoButton(
-                onPressed: widget.onStepCancel,
-                color: cancelColor,
-                // ### TODO: textTheme: ButtonTextTheme.normal,
-                child:
-                    Text('Cancel'), // ### TODO: localizations.cancelButtonLabel
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          CupertinoButton(
+            padding: _kBackgroundButtonPadding,
+            onPressed: widget.onStepCancel,
+            child: Text('Cancel'),
+          ),
+          CupertinoTheme(
+            data: CupertinoThemeData(
+              textTheme: CupertinoTextThemeData(
+                textStyle: textStyle.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
-          ],
-        ),
+            child: CupertinoButton(
+              padding: _kBackgroundButtonPadding,
+              onPressed: widget.onStepContinue,
+              child: Text('Continue'),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -458,13 +444,15 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
       case StepState.indexed:
       case StepState.editing:
       case StepState.complete:
-        return textTheme.navTitleTextStyle; // ### TODO: bodyText1
+        return textTheme.navActionTextStyle;
       case StepState.disabled:
-        return textTheme.navTitleTextStyle // ### TODO: bodyText1
-            .copyWith(color: _isDark() ? _kDisabledDark : _kDisabledLight);
+        return textTheme.navActionTextStyle.copyWith(
+            color: CupertinoDynamicColor.resolve(
+                CupertinoColors.placeholderText, context));
       case StepState.error:
-        return textTheme.navTitleTextStyle // ### TODO: bodyText1
-            .copyWith(color: _isDark() ? _kErrorDark : _kErrorLight);
+        return textTheme.navActionTextStyle.copyWith(
+            color: CupertinoDynamicColor.resolve(
+                CupertinoColors.systemRed, context));
     }
     return null;
   }
@@ -478,13 +466,15 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
       case StepState.indexed:
       case StepState.editing:
       case StepState.complete:
-        return textTheme.navActionTextStyle; // ### TODO: caption
+        return textTheme.tabLabelTextStyle;
       case StepState.disabled:
-        return textTheme.navActionTextStyle // ### TODO: caption
-            .copyWith(color: _isDark() ? _kDisabledDark : _kDisabledLight);
+        return textTheme.tabLabelTextStyle.copyWith(
+            color: CupertinoDynamicColor.resolve(
+                CupertinoColors.placeholderText, context));
       case StepState.error:
-        return textTheme.navActionTextStyle // ### TODO: caption
-            .copyWith(color: _isDark() ? _kErrorDark : _kErrorLight);
+        return textTheme.tabLabelTextStyle.copyWith(
+            color: CupertinoDynamicColor.resolve(
+                CupertinoColors.systemRed, context));
     }
     return null;
   }
@@ -516,18 +506,10 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
 
   Widget _buildVerticalHeader(int index) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24.0),
+      margin: const EdgeInsets.symmetric(horizontal: _kStepMargin),
       child: Row(
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              // Line parts are always added in order for the ink splash to
-              // flood the tips of the connector lines.
-              _buildLine(!_isFirst(index)),
-              _buildIcon(index),
-              _buildLine(!_isLast(index)),
-            ],
-          ),
+          _buildIcon(index),
           Container(
             margin: const EdgeInsetsDirectional.only(start: 12.0),
             child: _buildHeaderText(index),
@@ -541,11 +523,11 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
     return Stack(
       children: <Widget>[
         PositionedDirectional(
-          start: 24.0,
+          start: _kStepMargin,
           top: 0.0,
           bottom: 0.0,
           child: SizedBox(
-            width: 24.0,
+            width: _kStepSize,
             child: Center(
               child: SizedBox(
                 width: _isLast(index) ? 0.0 : 1.0,
@@ -560,9 +542,9 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
           firstChild: Container(height: 0.0),
           secondChild: Container(
             margin: const EdgeInsetsDirectional.only(
-              start: 60.0,
-              end: 24.0,
-              bottom: 24.0,
+              start: 2 * _kStepMargin + _kStepSize,
+              end: _kStepMargin,
+              bottom: _kStepMargin,
             ),
             child: Column(
               children: <Widget>[
@@ -591,7 +573,13 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
         for (int i = 0; i < widget.steps.length; i += 1)
           Column(
             key: _keys[i],
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Padding(
+                padding: const EdgeInsetsDirectional.only(
+                    start: _kStepMargin + _kStepSize / 2),
+                child: _buildLine(!_isFirst(i)),
+              ),
               CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: widget.steps[i].state != StepState.disabled
@@ -610,6 +598,11 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
                 child: _buildVerticalHeader(i),
               ),
               _buildVerticalBody(i),
+              Padding(
+                padding: const EdgeInsetsDirectional.only(
+                    start: _kStepMargin + _kStepSize / 2),
+                child: _buildLine(!_isLast(i)),
+              ),
             ],
           ),
       ],
