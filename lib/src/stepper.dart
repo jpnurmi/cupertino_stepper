@@ -4,45 +4,13 @@
 // found in the LICENSE file.
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' as todo; // ### TODO: remove
+import 'package:flutter/material.dart' show Step, StepState, StepperType;
+export 'package:flutter/material.dart' show Step, StepState, StepperType;
 
 // TODO(dragostis): Missing functionality:
 //   * mobile horizontal mode with adding/removing steps
 //   * alternative labeling
 //   * stepper feedback in the case of high-latency interactions
-
-/// The state of a [Step] which is used to control the style of the circle and
-/// text.
-///
-/// See also:
-///
-///  * [Step]
-enum StepState {
-  /// A step that displays its index in its circle.
-  indexed,
-
-  /// A step that displays a pencil icon in its circle.
-  editing,
-
-  /// A step that displays a tick icon in its circle.
-  complete,
-
-  /// A step that is disabled and does not to react to taps.
-  disabled,
-
-  /// A step that is currently having an error. e.g. the user has submitted wrong
-  /// input.
-  error,
-}
-
-/// Defines the [Stepper]'s main axis.
-enum StepperType {
-  /// A vertical layout of the steps with their content in-between the titles.
-  vertical,
-
-  /// A horizontal layout of the steps with their content below the titles.
-  horizontal,
-}
 
 const double _kStepFontSize = 20.0;
 const double _kStepSize = 44.0;
@@ -55,51 +23,6 @@ const EdgeInsets _kBackgroundButtonPadding = EdgeInsets.symmetric(
   vertical: 14.0,
   horizontal: 64.0,
 );
-
-/// A material step used in [Stepper]. The step can have a title and subtitle,
-/// an icon within its circle, some content and a state that governs its
-/// styling.
-///
-/// See also:
-///
-///  * [Stepper]
-///  * <https://material.io/archive/guidelines/components/steppers.html>
-@immutable
-class Step {
-  /// Creates a step for a [Stepper].
-  ///
-  /// The [title], [content], and [state] arguments must not be null.
-  const Step({
-    @required this.title,
-    this.subtitle,
-    @required this.content,
-    this.state = StepState.indexed,
-    this.isActive = false,
-  })  : assert(title != null),
-        assert(content != null),
-        assert(state != null);
-
-  /// The title of the step that typically describes it.
-  final Widget title;
-
-  /// The subtitle of the step that appears below the title and has a smaller
-  /// font size. It typically gives more details that complement the title.
-  ///
-  /// If null, the subtitle is not shown.
-  final Widget subtitle;
-
-  /// The content of the step that appears below the [title] and [subtitle].
-  ///
-  /// Below the content, every step has a 'continue' and 'cancel' button.
-  final Widget content;
-
-  /// The state of the step which determines the styling of its components
-  /// and whether steps are interactive.
-  final StepState state;
-
-  /// Whether or not the step is active. The flag only influences styling.
-  final bool isActive;
-}
 
 /// A material stepper widget that displays progress through a sequence of
 /// steps. Steppers are particularly useful in the case of forms where one step
