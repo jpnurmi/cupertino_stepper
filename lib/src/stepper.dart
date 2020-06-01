@@ -20,10 +20,6 @@ const double _kStepFontSize = 20.0;
 const double _kTriangleHeight =
     _kStepSize * 0.866025; // Triangle height. sqrt(3.0) / 2.0
 const Duration _kThemeAnimationDuration = const Duration(milliseconds: 200);
-const EdgeInsets _kButtonPadding = EdgeInsets.symmetric(
-  vertical: 14.0,
-  horizontal: 64.0,
-);
 
 /// A cupertino stepper widget that displays progress through a sequence of
 /// steps. Steppers are particularly useful in the case of forms where one step
@@ -338,21 +334,25 @@ class _CupertinoStepperState extends State<CupertinoStepper>
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           CupertinoButton(
-            padding: _kButtonPadding,
-            onPressed: widget.onStepCancel,
-            child: Text('Cancel'),
-          ),
-          CupertinoTheme(
-            data: CupertinoThemeData(
-              textTheme: CupertinoTextThemeData(
-                textStyle: textStyle.copyWith(fontWeight: FontWeight.bold),
+            padding: EdgeInsets.zero,
+            child: IntrinsicWidth(
+              child: CupertinoDialogAction(
+                onPressed: widget.onStepCancel,
+                child: Text('Cancel'),
               ),
             ),
-            child: CupertinoButton(
-              padding: _kButtonPadding,
-              onPressed: widget.onStepContinue,
-              child: Text('Continue'),
+            onPressed: widget.onStepCancel,
+          ),
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            child: IntrinsicWidth(
+              child: CupertinoDialogAction(
+                isDefaultAction: true,
+                child: Text('Continue'),
+                onPressed: widget.onStepContinue,
+              ),
             ),
+            onPressed: widget.onStepContinue,
           ),
         ],
       ),
