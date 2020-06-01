@@ -654,14 +654,10 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
 
     return Column(
       children: <Widget>[
-        todo.Material(
-          // ### TODO: remove material
-          elevation: 2.0,
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Row(
-              children: children,
-            ),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Row(
+            children: children,
           ),
         ),
         Expanded(
