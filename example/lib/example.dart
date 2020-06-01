@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' as todo; // ### TODO: remove
 import 'package:cupertino_stepper/cupertino_stepper.dart';
 
 void main() => runApp(StepperApp());
@@ -14,9 +13,7 @@ class StepperApp extends StatelessWidget {
     return CupertinoApp(
       title: 'CupertinoStepper for Flutter',
       debugShowCheckedModeBanner: false,
-      home: todo.Material(
-        child: StepperPage(),
-      ),
+      home: StepperPage(),
     );
   }
 }
@@ -41,7 +38,7 @@ class _StepperPageState extends State<StepperPage> {
             switch (orientation) {
               case Orientation.portrait:
                 return _buildStepper(StepperType.vertical);
-              case todo.Orientation.landscape:
+              case Orientation.landscape:
                 return _buildStepper(StepperType.horizontal);
               default:
                 throw UnimplementedError(orientation.toString());
