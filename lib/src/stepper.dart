@@ -265,7 +265,6 @@ class _CupertinoStepperState extends State<CupertinoStepper>
         duration: _kThemeAnimationDuration,
         decoration: ShapeDecoration(
           color: _circleColor(index),
-          //shape: BoxShape.circle,
           shape: CircleBorder(side: BorderSide(color: _borderColor(index))),
         ),
         child: Center(
