@@ -504,22 +504,26 @@ class _CupertinoStepperState extends State<CupertinoStepper>
                     start: _kStepMargin + _kStepSize / 2),
                 child: _buildLine(!_isFirst(i)),
               ),
-              CupertinoButton(
-                padding: EdgeInsets.zero,
-                onPressed: widget.steps[i].state != StepState.disabled
-                    ? () {
-                        // In the vertical case we need to scroll to the newly tapped
-                        // step.
-                        Scrollable.ensureVisible(
-                          _keys[i].currentContext,
-                          curve: Curves.fastOutSlowIn,
-                          duration: _kThemeAnimationDuration,
-                        );
+              Focus(
+                canRequestFocus: widget.steps[i].state != StepState.disabled,
+                child: CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: widget.steps[i].state != StepState.disabled
+                      ? () {
+                          // In the vertical case we need to scroll to the newly tapped
+                          // step.
+                          Scrollable.ensureVisible(
+                            _keys[i].currentContext,
+                            curve: Curves.fastOutSlowIn,
+                            duration: _kThemeAnimationDuration,
+                          );
 
-                        if (widget.onStepTapped != null) widget.onStepTapped(i);
-                      }
-                    : null,
-                child: _buildVerticalHeader(i),
+                          if (widget.onStepTapped != null)
+                            widget.onStepTapped(i);
+                        }
+                      : null,
+                  child: _buildVerticalHeader(i),
+                ),
               ),
               _buildVerticalBody(i),
               Padding(
@@ -536,26 +540,30 @@ class _CupertinoStepperState extends State<CupertinoStepper>
   Widget _buildHorizontal() {
     final List<Widget> children = <Widget>[
       for (int i = 0; i < widget.steps.length; i += 1) ...<Widget>[
-        CupertinoButton(
-          padding: EdgeInsets.zero,
-          onPressed: widget.steps[i].state != StepState.disabled
-              ? () {
-                  if (widget.onStepTapped != null) widget.onStepTapped(i);
-                }
-              : null,
-          child: Row(
-            children: <Widget>[
-              Container(
-                height: 72.0,
-                child: Center(
-                  child: _buildIcon(i),
+        Focus(
+          canRequestFocus: widget.steps[i].state != StepState.disabled,
+          child: CupertinoButton(
+            padding: EdgeInsets.zero,
+            onPressed: widget.steps[i].state != StepState.disabled
+                ? () {
+                    if (widget.onStepTapped != null) widget.onStepTapped(i);
+                  }
+                : null,
+            child: Row(
+              children: <Widget>[
+                Container(
+                  height: 72.0,
+                  child: Center(
+                    child: _buildIcon(i),
+                  ),
                 ),
-              ),
-              Container(
-                margin: const EdgeInsetsDirectional.only(start: _kStepSpacing),
-                child: _buildHeaderText(i),
-              ),
-            ],
+                Container(
+                  margin:
+                      const EdgeInsetsDirectional.only(start: _kStepSpacing),
+                  child: _buildHeaderText(i),
+                ),
+              ],
+            ),
           ),
         ),
         if (!_isLast(i))
