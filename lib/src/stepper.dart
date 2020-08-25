@@ -12,6 +12,7 @@ export 'package:flutter/material.dart' show Step, StepState, StepperType;
 //   * alternative labeling
 //   * stepper feedback in the case of high-latency interactions
 
+const double _kLineWidth = 1.0;
 const double _kStepSize = 44.0;
 const double _kStepMargin = 24.0;
 const double _kStepPadding = 8.0;
@@ -189,7 +190,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
 
   Widget _buildLine(bool visible) {
     return Container(
-      width: visible ? 1.0 : 0.0,
+      width: visible ? _kLineWidth : 0.0,
       height: 16.0,
       color: CupertinoColors.separator,
     );
@@ -453,7 +454,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
             width: _kStepSize,
             child: Center(
               child: SizedBox(
-                width: _isLast(index) ? 0.0 : 1.0,
+                width: _isLast(index) ? 0.0 : _kLineWidth,
                 child: Container(
                   color: CupertinoColors.separator,
                 ),
@@ -500,7 +501,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
             children: <Widget>[
               Padding(
                 padding: const EdgeInsetsDirectional.only(
-                    start: _kStepMargin + _kStepSize / 2),
+                    start: _kStepMargin + (_kStepSize - _kLineWidth) / 2),
                 child: _buildLine(!_isFirst(i)),
               ),
               Focus(
@@ -527,7 +528,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
               _buildVerticalBody(i),
               Padding(
                 padding: const EdgeInsetsDirectional.only(
-                    start: _kStepMargin + _kStepSize / 2),
+                    start: _kStepMargin + (_kStepSize - _kLineWidth) / 2),
                 child: _buildLine(!_isLast(i)),
               ),
             ],
@@ -569,7 +570,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
           Expanded(
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: _kStepPadding),
-              height: 1.0,
+              height: _kLineWidth,
               color: CupertinoColors.separator,
             ),
           ),
