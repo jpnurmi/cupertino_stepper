@@ -636,8 +636,8 @@ void main() {
     );
     await tester.pump();
 
-    final FocusNode disabledNode = Focus.of(tester.element(find.text('Step 0')),
-        nullOk: true, scopeOk: true);
+    final FocusNode disabledNode =
+        Focus.maybeOf(tester.element(find.text('Step 0')), scopeOk: true);
     disabledNode.requestFocus();
     await tester.pump();
     expect(disabledNode.hasPrimaryFocus, isFalse);
@@ -664,8 +664,8 @@ void main() {
     );
     await tester.pump();
 
-    final FocusNode disabledNode = Focus.of(tester.element(find.text('Step 0')),
-        nullOk: true, scopeOk: true);
+    final FocusNode disabledNode =
+        Focus.maybeOf(tester.element(find.text('Step 0')), scopeOk: true);
     disabledNode.requestFocus();
     await tester.pump();
     expect(disabledNode.hasPrimaryFocus, isFalse);
