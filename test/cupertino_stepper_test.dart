@@ -337,7 +337,6 @@ void main() {
     );
 
     await tester.pump(const Duration(milliseconds: 100));
-    print(scrollableState.position);
     expect(scrollableState.position.pixels, greaterThan(0.0));
   });
 
