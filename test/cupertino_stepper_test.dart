@@ -386,7 +386,7 @@ void main() {
     }
 
     final ControlsWidgetBuilder builder = (BuildContext context,
-        {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+        {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
       return Container(
         margin: const EdgeInsets.only(top: 16.0),
         child: ConstrainedBox(
@@ -480,8 +480,8 @@ void main() {
   });
 
   testWidgets('Nested stepper error test', (WidgetTester tester) async {
-    FlutterErrorDetails errorDetails;
-    final FlutterExceptionHandler oldHandler = FlutterError.onError;
+    FlutterErrorDetails? errorDetails;
+    final FlutterExceptionHandler? oldHandler = FlutterError.onError;
     FlutterError.onError = (FlutterErrorDetails details) {
       errorDetails = details;
     };
@@ -522,7 +522,7 @@ void main() {
     }
 
     expect(errorDetails, isNotNull);
-    expect(errorDetails.stack, isNotNull);
+    expect(errorDetails!.stack, isNotNull);
     // Check the ErrorDetails without the stack trace
     final String fullErrorMessage = errorDetails.toString();
     final List<String> lines = fullErrorMessage.split('\n');
@@ -637,7 +637,7 @@ void main() {
     await tester.pump();
 
     final FocusNode disabledNode =
-        Focus.maybeOf(tester.element(find.text('Step 0')), scopeOk: true);
+        Focus.maybeOf(tester.element(find.text('Step 0')), scopeOk: true)!;
     disabledNode.requestFocus();
     await tester.pump();
     expect(disabledNode.hasPrimaryFocus, isFalse);
@@ -665,7 +665,7 @@ void main() {
     await tester.pump();
 
     final FocusNode disabledNode =
-        Focus.maybeOf(tester.element(find.text('Step 0')), scopeOk: true);
+        Focus.maybeOf(tester.element(find.text('Step 0')), scopeOk: true)!;
     disabledNode.requestFocus();
     await tester.pump();
     expect(disabledNode.hasPrimaryFocus, isFalse);
