@@ -80,7 +80,7 @@ class _StepperPageState extends State<StepperPage> {
   }
 
   Step _buildStep({
-    @required Widget title,
+    required Widget title,
     StepState state = StepState.indexed,
     bool isActive = false,
   }) {

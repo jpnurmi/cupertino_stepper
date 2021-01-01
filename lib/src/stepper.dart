@@ -44,8 +44,8 @@ class CupertinoStepper extends StatefulWidget {
   ///
   /// The [steps], [type], and [currentStep] arguments must not be null.
   const CupertinoStepper({
-    Key key,
-    @required this.steps,
+    Key? key,
+    required this.steps,
     this.physics,
     this.type = StepperType.vertical,
     this.currentStep = 0,
@@ -53,10 +53,7 @@ class CupertinoStepper extends StatefulWidget {
     this.onStepContinue,
     this.onStepCancel,
     this.controlsBuilder,
-  })  : assert(steps != null),
-        assert(type != null),
-        assert(currentStep != null),
-        assert(0 <= currentStep && currentStep < steps.length),
+  })  : assert(0 <= currentStep && currentStep < steps.length),
         super(key: key);
 
   /// The steps of the stepper whose titles, subtitles, icons always get shown.
@@ -71,7 +68,7 @@ class CupertinoStepper extends StatefulWidget {
   ///
   /// If the stepper is contained within another scrollable it
   /// can be helpful to set this property to [ClampingScrollPhysics].
-  final ScrollPhysics physics;
+  final ScrollPhysics? physics;
 
   /// The type of stepper that determines the layout. In the case of
   /// [StepperType.horizontal], the content of the current step is displayed
@@ -84,17 +81,17 @@ class CupertinoStepper extends StatefulWidget {
 
   /// The callback called when a step is tapped, with its index passed as
   /// an argument.
-  final ValueChanged<int> onStepTapped;
+  final ValueChanged<int>? onStepTapped;
 
   /// The callback called when the 'continue' button is tapped.
   ///
   /// If null, the 'continue' button will be disabled.
-  final VoidCallback onStepContinue;
+  final VoidCallback? onStepContinue;
 
   /// The callback called when the 'cancel' button is tapped.
   ///
   /// If null, the 'cancel' button will be disabled.
-  final VoidCallback onStepCancel;
+  final VoidCallback? onStepCancel;
 
   /// The callback for creating custom controls.
   ///
@@ -144,7 +141,7 @@ class CupertinoStepper extends StatefulWidget {
   /// }
   /// ```
   /// {@end-tool}
-  final ControlsWidgetBuilder controlsBuilder;
+  final ControlsWidgetBuilder? controlsBuilder;
 
   @override
   _CupertinoStepperState createState() => _CupertinoStepperState();
@@ -152,7 +149,7 @@ class CupertinoStepper extends StatefulWidget {
 
 class _CupertinoStepperState extends State<CupertinoStepper>
     with TickerProviderStateMixin {
-  List<GlobalKey> _keys;
+  late List<GlobalKey> _keys;
   final Map<int, StepState> _oldStates = <int, StepState>{};
 
   @override
@@ -199,9 +196,8 @@ class _CupertinoStepperState extends State<CupertinoStepper>
   Widget _buildCircleChild(int index, bool oldState) {
     final CupertinoThemeData themeData = CupertinoTheme.of(context);
     final StepState state =
-        oldState ? _oldStates[index] : widget.steps[index].state;
+        oldState ? _oldStates[index]! : widget.steps[index].state;
     final bool isActive = widget.steps[index].isActive;
-    assert(state != null);
     switch (state) {
       case StepState.disabled:
       case StepState.indexed:
@@ -238,10 +234,9 @@ class _CupertinoStepperState extends State<CupertinoStepper>
             style: TextStyle(
                 fontSize: _kStepFontSize, color: CupertinoColors.white));
     }
-    return null;
   }
 
-  Color _circleColor(int index) {
+  Color? _circleColor(int index) {
     final CupertinoThemeData themeData = CupertinoTheme.of(context);
     return widget.steps[index].isActive ? themeData.primaryColor : null;
   }
@@ -324,7 +319,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
 
   Widget _buildVerticalControls() {
     if (widget.controlsBuilder != null)
-      return widget.controlsBuilder(context,
+      return widget.controlsBuilder!(context,
           onStepContinue: widget.onStepContinue,
           onStepCancel: widget.onStepCancel);
 
@@ -363,7 +358,6 @@ class _CupertinoStepperState extends State<CupertinoStepper>
     final CupertinoThemeData themeData = CupertinoTheme.of(context);
     final CupertinoTextThemeData textTheme = themeData.textTheme;
 
-    assert(widget.steps[index].state != null);
     switch (widget.steps[index].state) {
       case StepState.indexed:
       case StepState.editing:
@@ -378,14 +372,12 @@ class _CupertinoStepperState extends State<CupertinoStepper>
             color: CupertinoDynamicColor.resolve(
                 CupertinoColors.systemRed, context));
     }
-    return null;
   }
 
   TextStyle _subtitleStyle(int index) {
     final CupertinoThemeData themeData = CupertinoTheme.of(context);
     final CupertinoTextThemeData textTheme = themeData.textTheme;
 
-    assert(widget.steps[index].state != null);
     switch (widget.steps[index].state) {
       case StepState.indexed:
       case StepState.editing:
@@ -400,7 +392,6 @@ class _CupertinoStepperState extends State<CupertinoStepper>
             color: CupertinoDynamicColor.resolve(
                 CupertinoColors.systemRed, context));
     }
-    return null;
   }
 
   Widget _buildHeaderText(int index) {
@@ -421,7 +412,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
               style: _subtitleStyle(index),
               duration: _kThemeAnimationDuration,
               curve: Curves.fastOutSlowIn,
-              child: widget.steps[index].subtitle,
+              child: widget.steps[index].subtitle!,
             ),
           ),
       ],
@@ -513,13 +504,13 @@ class _CupertinoStepperState extends State<CupertinoStepper>
                           // In the vertical case we need to scroll to the newly tapped
                           // step.
                           Scrollable.ensureVisible(
-                            _keys[i].currentContext,
+                            _keys[i].currentContext!,
                             curve: Curves.fastOutSlowIn,
                             duration: _kThemeAnimationDuration,
                           );
 
                           if (widget.onStepTapped != null)
-                            widget.onStepTapped(i);
+                            widget.onStepTapped!(i);
                         }
                       : null,
                   child: _buildVerticalHeader(i),
@@ -546,7 +537,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
             padding: EdgeInsets.zero,
             onPressed: widget.steps[i].state != StepState.disabled
                 ? () {
-                    if (widget.onStepTapped != null) widget.onStepTapped(i);
+                    if (widget.onStepTapped != null) widget.onStepTapped!(i);
                   }
                 : null,
             child: Row(
@@ -614,14 +605,12 @@ class _CupertinoStepperState extends State<CupertinoStepper>
             'https://material.io/archive/guidelines/components/steppers.html#steppers-usage');
       return true;
     }());
-    assert(widget.type != null);
     switch (widget.type) {
       case StepperType.vertical:
         return _buildVertical();
       case StepperType.horizontal:
         return _buildHorizontal();
     }
-    return null;
   }
 }
 
@@ -629,7 +618,7 @@ class _CupertinoStepperState extends State<CupertinoStepper>
 // top vertex the middle of its top.
 class _TrianglePainter extends CustomPainter {
   _TrianglePainter({
-    this.color,
+    required this.color,
   });
 
   final Color color;
