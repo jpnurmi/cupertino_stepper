@@ -1,3 +1,8 @@
+## [0.2.0-nullsafety.0] - 2021-01-01
+
+* Migrated to null safety
+* Happy New Year!
+
 ## [0.1.2] - 2020-10-09
 
 * Updated the cupertino_icons dependency to version 1.0.0.
