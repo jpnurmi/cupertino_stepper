@@ -3,7 +3,7 @@
 [![pub](https://img.shields.io/pub/v/cupertino_stepper.svg)](https://pub.dev/packages/cupertino_stepper)
 [![license: BSD](https://img.shields.io/badge/license-BSD-yellow.svg)](https://opensource.org/licenses/BSD-3-Clause)
 ![build](https://github.com/jpnurmi/cupertino_stepper/workflows/build/badge.svg)
-[![codecov](https://codecov.io/gh/jpnurmi/cupertino_stepper/branch/master/graph/badge.svg)](https://codecov.io/gh/jpnurmi/cupertino_stepper)
+[![codecov](https://codecov.io/gh/jpnurmi/cupertino_stepper/branch/main/graph/badge.svg)](https://codecov.io/gh/jpnurmi/cupertino_stepper)
 
 Cupertino version of the stock [Material Stepper](https://api.flutter.dev/flutter/material/Stepper-class.html)
 in [Flutter](https://flutter.dev).
