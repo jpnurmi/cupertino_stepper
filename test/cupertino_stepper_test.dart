@@ -384,8 +384,8 @@ void main() {
       canceledPressed = true;
     }
 
-    final ControlsWidgetBuilder builder = (BuildContext context,
-        {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
+    final ControlsWidgetBuilder builder =
+        (BuildContext context, ControlsDetails details) {
       return Container(
         margin: const EdgeInsets.only(top: 16.0),
         child: ConstrainedBox(
@@ -393,13 +393,13 @@ void main() {
           child: Row(
             children: <Widget>[
               CupertinoButton(
-                onPressed: onStepContinue,
+                onPressed: details.onStepContinue,
                 child: const Text('Let us continue!'),
               ),
               Container(
                 margin: const EdgeInsetsDirectional.only(start: 8.0),
                 child: CupertinoButton(
-                  onPressed: onStepCancel,
+                  onPressed: details.onStepCancel,
                   child: const Text('Cancel This!'),
                 ),
               ),
