@@ -2,7 +2,7 @@ name: cupertino_stepper
 description: >-
   Stepper is a widget that displays progress through a sequence of steps. This is a Cupertino
   version of the stock Material Stepper in Flutter.
-version: 0.2.0
+version: 0.2.1
 homepage: https://github.com/jpnurmi/cupertino_stepper
 repository: https://github.com/jpnurmi/cupertino_stepper
 issue_tracker: https://github.com/jpnurmi/cupertino_stepper/issues

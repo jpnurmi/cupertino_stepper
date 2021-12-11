@@ -1,3 +1,7 @@
+## [0.2.1] - 2021-12-11
+
+* Fix compatibility with Flutter 2.8 (thanks @rstorr)
+
 ## [0.2.0] - 2021-03-14
 
 * Stable null-safe version with stable SDK constraints
