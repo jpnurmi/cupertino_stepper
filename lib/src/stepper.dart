@@ -589,7 +589,6 @@ class _CupertinoStepperState extends State<CupertinoStepper>
               AnimatedSize(
                 curve: Curves.fastOutSlowIn,
                 duration: _kThemeAnimationDuration,
-                vsync: this,
                 child: widget.steps[widget.currentStep].content,
               ),
               _buildVerticalControls(),

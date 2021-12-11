@@ -4,7 +4,6 @@
 // found in the LICENSE file.
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cupertino_stepper/cupertino_stepper.dart';
 import 'package:flutter_test/flutter_test.dart';
