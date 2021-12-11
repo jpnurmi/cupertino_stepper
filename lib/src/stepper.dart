@@ -4,8 +4,10 @@
 // found in the LICENSE file.
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Step, StepState, StepperType;
-export 'package:flutter/material.dart' show Step, StepState, StepperType;
+import 'package:flutter/material.dart'
+    show Step, ControlsWidgetBuilder, ControlsDetails, StepState, StepperType;
+export 'package:flutter/material.dart'
+    show Step, ControlsWidgetBuilder, ControlsDetails, StepState, StepperType;
 
 // TODO(dragostis): Missing functionality:
 //   * mobile horizontal mode with adding/removing steps
@@ -319,9 +321,13 @@ class _CupertinoStepperState extends State<CupertinoStepper>
 
   Widget _buildVerticalControls() {
     if (widget.controlsBuilder != null)
-      return widget.controlsBuilder!(context,
-          onStepContinue: widget.onStepContinue,
-          onStepCancel: widget.onStepCancel);
+      return widget.controlsBuilder!(
+          context,
+          ControlsDetails(
+              currentStep: 0,
+              stepIndex: 0,
+              onStepContinue: widget.onStepContinue,
+              onStepCancel: widget.onStepCancel));
 
     return Container(
       margin: const EdgeInsets.only(top: 16.0),
