@@ -19,11 +19,11 @@ steps need to be completed in order to submit the whole form.
 
 ### Horizontal
 
-![Horizontal CupertinoStepper](https://raw.githubusercontent.com/jpnurmi/cupertino_stepper/master/doc/images/horizontal.png "Horizontal CupertinoStepper")
+![Horizontal CupertinoStepper](https://raw.githubusercontent.com/jpnurmi/cupertino_stepper/main/doc/images/horizontal.png "Horizontal CupertinoStepper")
 
 ### Vertical
 
-![Vertical CupertinoStepper](https://raw.githubusercontent.com/jpnurmi/cupertino_stepper/master/doc/images/vertical.png "Vertical CupertinoStepper")
+![Vertical CupertinoStepper](https://raw.githubusercontent.com/jpnurmi/cupertino_stepper/main/doc/images/vertical.png "Vertical CupertinoStepper")
 
 ## Usage
 
